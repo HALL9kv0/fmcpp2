@@ -18,7 +18,7 @@ It's been really helpfull for me, so it might help others.
 - [X] var : int = value;
 - [X] var:= value;
 - [X] func: (x) -> = { return x };
-- [X] call(:() -> value, arg1, arg2);
+- [X] call(:() -> value = 1, arg1, arg2); spacing after, and :
 - [X] some [], (), {} spacing stuff;
 - [X] > < = >> << ++ -- && || != etc spacing stuff;
 - [ ] object < T >, treats it like an operator
