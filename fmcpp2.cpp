@@ -62,7 +62,7 @@ std::size_t replace_all(std::string &inout, std::string_view what, std::string_v
 }
 void apply_col_rules(std::string &str, std::string::size_type &n) {
   // CHECK BEFORE
-  if (n > 3 && n + 2 != std::string::npos) {
+  if (n > 3 && n + 2  <str.length()) {
     // SPECIAL CASE :() LAMBDA in function call
     if (is_comma(str[n - 1]) || is_Lparen(str[n - 1]) && !std::isspace(str[n + 1])) return;
     if (is_comma(str[n - 1]) || is_Lparen(str[n - 1]) && std::isspace(str[n + 1])) {
@@ -80,9 +80,9 @@ void apply_col_rules(std::string &str, std::string::size_type &n) {
   }
 
   // CHECK after
-  if (n + 1 != std::string::npos) {
+  if (n + 1 <str.length()) {
     // REMOVE SPACE AFTER
-    if (n + 2 != std::string::npos && std::isspace(str[n + 1]) && is_Lparen(str[n + 2]) && n > 2 && !is_naming_char(str[n - 1])) {
+    if (n + 2 <str.length() && is_Lparen(str[n + 2]) && n > 2 && !is_naming_char(str[n - 1])) {
       str.erase(n + 1, 1);
       --n;
     }  // ADD SPACE AFTER
@@ -106,7 +106,7 @@ void apply_eq_rules(std::string &str, std::string::size_type &n) {
     }
   }
   // ADD SPACE AFTER
-  if (n + 1 != std::string::npos) {
+  if (n + 1 <str.length()) {
     if (!std::isspace(str[n + 1]) && !is_eq(str[n + 1])) {
       str.insert(n + 1, 1, ' ');
       ++n;
@@ -132,7 +132,7 @@ void apply_Lparen_rules(std::string &str, std::string::size_type &n) {
     }
   }
   // REMOVE SPACE AFTER
-  if (n + 1 != std::string::npos) {
+  if (n + 1 <str.length()) {
     if (std::isspace(str[n + 1])) {
       str.erase(n + 1, 1);
       --n;
@@ -140,7 +140,7 @@ void apply_Lparen_rules(std::string &str, std::string::size_type &n) {
   }
 }
 void apply_Rparen_rules(std::string &str, std::string::size_type &n) {
-  if (n + 1 != std::string::npos) {
+  if (n + 1  <str.length()) {
     // ADD SPACE AFTER
     if (!std::isspace(str[n + 1]) && !is_Rparen(str[n + 1]) && !is_semicol(str[n + 1]) && !is_dollar(str[n + 1])) {
       str.insert(n + 1, 1, ' ');
@@ -178,7 +178,7 @@ void apply_Rbracket_rules(std::string &str, std::string::size_type &n) {
     }
   }
   // ADD SPACE AFTER
-  if (n + 1 != std::string::npos) {
+  if (n + 1  <str.length()) {
     if (!std::isspace(str[n + 1]) && !is_oper(str[n + 1])) {
       str.insert(n + 1, 1, ' ');
       ++n;
@@ -199,7 +199,7 @@ void apply_Lbracket_rules(std::string &str, std::string::size_type &n) {
     }
   }
   // ADD SPACE AFTER
-  if (n + 1 != std::string::npos) {
+  if (n + 1 <str.length()) {
     if (!std::isspace(str[n + 1]) && !is_oper(str[n + 1])) {
       str.insert(n + 1, 1, ' ');
       ++n;
@@ -215,7 +215,7 @@ void apply_comma_rules(std::string &str, std::string::size_type &n) {
     }
   }
   // ADD SPACE AFTER
-  if (n + 1 != std::string::npos) {
+  if (n + 1  <str.length()) {
     if (!std::isspace(str[n + 1])) {
       str.insert(n + 1, 1, ' ');
       ++n;
@@ -225,13 +225,13 @@ void apply_comma_rules(std::string &str, std::string::size_type &n) {
 void apply_lefthand_oper_rules(std::string &str, std::string::size_type &n) {
   if (n > 2) {
     // ADD SPACE BEFORE
-    if (!std::isspace(str[n - 1]) && !is_oper(str[n - 1]) && n + 1 != std::string::npos && !is_oper(str[n + 1])) {
+    if (!std::isspace(str[n - 1]) && !is_oper(str[n - 1]) && n + 1 < str.length() && !is_oper(str[n + 1])) {
       str.insert(n, 1, ' ');
       ++n;
     }
   }
   // ADD SPACE AFTER
-  if (n + 1 != std::string::npos) {
+  if (n + 1 <str.length()) {
     if (!std::isspace(str[n + 1]) && !is_oper(str[n + 1])) {
       str.insert(n + 1, 1, ' ');
       ++n;
@@ -247,7 +247,7 @@ void apply_Rsqbracket_rules(std::string &str, std::string::size_type &n) {
     }
   }
   // REMOVE SPACE AFTER
-  if (n + 2 != std::string::npos) {
+  if (n + 2 <str.length()) {
     if (std::isspace(str[n + 1]) && is_Lsqbracket(str[n + 2])) {
       str.erase(n + 1, 1);
       --n;
@@ -263,7 +263,7 @@ void apply_Lsqbracket_rules(std::string &str, std::string::size_type &n) {
     }
   }
   // REMOVE SPACE AFTER
-  if (n + 1 != std::string::npos) {
+  if (n + 1 <str.length()) {
     if (std::isspace(str[n + 1])) {
       str.erase(n + 1, 1);
       --n;
@@ -272,7 +272,7 @@ void apply_Lsqbracket_rules(std::string &str, std::string::size_type &n) {
 }
 
 void apply_Lbrace_rules(std::string &str, std::string::size_type &n) {
-  if (n + 1 != std::string::npos) {
+  if (n + 1 <str.length()) {
     // INSERT SPACE AFTER
     if (!std::isspace(str[n + 1])) {
       str.insert(n + 1, 1, ' ');
@@ -281,7 +281,7 @@ void apply_Lbrace_rules(std::string &str, std::string::size_type &n) {
   }
 }
 void apply_Rbrace_rules(std::string &str, std::string::size_type &n) {
-  if (n - 1 != std::string::npos) {
+  if (n - 1 <str.length()) {
     // INSERT SPACE BEFORE
     if (!std::isspace(str[n - 1])) {
       str.insert(n, 1, ' ');
@@ -368,12 +368,15 @@ int main(int argc, const char *argv[]) {
   fs.close();
   std::ofstream of(filename, std::ios::trunc);
   for (auto i = 0; auto &ln : lns) {
-    // ln.printBeforeAfter(i);
+    // ln.printBeforeAfter(i); // UNCOMMENT to view before/after 
     of << ln.indTxt() << std::endl;
     // ++i;
   }
   of.close();
-  
 
   return 0;
 }
+
+
+
+
