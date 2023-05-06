@@ -9,3 +9,15 @@ g++ -std=c++20 -O2  fmcpp2.cpp -o fmcpp2 && ./fmcpp2 source_file.cpp2
 
 ```
 Uncomment   ```//ln.printBeforeAfter(i); ``` to see the line-by-line before/after on the terminal.
+
+For some small cpp2 testing projects, no fancy code, works for me. Use at your own risk.
+
+### Things that might be done right
+- [X] Indentation based on { }
+- [X] var : int = value;
+- [X] var:= value;
+- [X] func: (x) -> = { return x };
+- [X] call(:() -> value, arg1, arg2);
+- [X] some [], (), {} spacing stuff;
+- [X] > < = >> << ++ -- && || != etc spacing stuff;
+- [] object<T> becomes object < T >, treats it like an operator
