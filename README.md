@@ -20,4 +20,4 @@ For some small cpp2 testing projects, no fancy code, works for me. Use at your o
 - [X] call(:() -> value, arg1, arg2);
 - [X] some [], (), {} spacing stuff;
 - [X] > < = >> << ++ -- && || != etc spacing stuff;
-- [] object<T> becomes object < T >, treats it like an operator
+- []  object < T >, treats it like an operator
